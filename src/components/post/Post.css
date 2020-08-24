@@ -5,4 +5,22 @@
 
 .postText {
   font-weight: normal;
+  padding: 15px;
+}
+
+.postHeader {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.avatar {
+  margin-right: 15px;
+  width: 30px !important;
+  height: 30px !important;
+  object-fit: contain;
+}
+
+.post {
+  max-width: 500px;
 }
