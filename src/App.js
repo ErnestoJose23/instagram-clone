@@ -1,4 +1,5 @@
 import React from "react";
+import Post from "./components/post/Post";
 
 import "./App.css";
 
@@ -12,6 +13,7 @@ function App() {
           alt="Logo"
         ></img>
       </div>
+      <Post />
     </div>
   );
 }
