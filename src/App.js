@@ -13,7 +13,26 @@ function App() {
           alt="Logo"
         ></img>
       </div>
-      <Post />
+      <Post
+        username="James"
+        caption="Wallpaper"
+        imageUrl="https://tecnovortex.com/wp-content/uploads/2019/04/wallpaper-engine.jpg"
+      />
+      <Post
+        username="John"
+        caption="This is a wallpaper "
+        imageUrl="https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+      />
+      <Post
+        username="Curtis"
+        caption="Hello there!"
+        imageUrl="https://i.blogs.es/d24b49/studio-muti-wallpapers/450_1000.jpg"
+      />
+      <Post
+        username="David"
+        caption="General Kenobi"
+        imageUrl="https://paranoidandroid.co/assets/wallpapers/2018/submerged_desktop_thumb.jpg"
+      />
     </div>
   );
 }
