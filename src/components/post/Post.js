@@ -1,6 +1,8 @@
 import React from "react";
 import "./Post.css";
 
+import Avatar from "@material-ui/core/Avatar";
+
 function Post() {
   return (
     <div className="post">
@@ -10,7 +12,9 @@ function Post() {
         className="postImage"
         src="https://tecnovortex.com/wp-content/uploads/2019/04/wallpaper-engine.jpg"
       />
-      <h4>Username:caption</h4>
+      <p className="postText">
+        <strong>Username:</strong> caption
+      </p>
     </div>
   );
 }
