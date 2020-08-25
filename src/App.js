@@ -18,8 +18,6 @@ function App() {
         "https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     },
   ]);
-  const posts = [];
-  posts.append("");
 
   return (
     <div className="App">
@@ -30,16 +28,15 @@ function App() {
           alt="Logo"
         ></img>
       </div>
-      <Post
-        username="James"
-        caption="Wallpaper"
-        imageUrl="https://tecnovortex.com/wp-content/uploads/2019/04/wallpaper-engine.jpg"
-      />
-      <Post
-        username="John"
-        caption="This is a wallpaper "
-        imageUrl="https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-      />
+
+      {posts.map((post) => (
+        <Post
+          username={post.username}
+          caption={post.caption}
+          imageUrl={post.imageUrl}
+        />
+      ))}
+
       <Post
         username="Curtis"
         caption="Hello there!"
