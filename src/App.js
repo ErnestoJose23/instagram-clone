@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Post from "./components/post/Post";
 
 import "./App.css";
+import { db } from "./firebase";
 
 function App() {
   const [posts, setPosts] = useState([
@@ -18,6 +19,10 @@ function App() {
         "https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     },
   ]);
+
+  useEffect(() => {
+    db.collection("posts").onSnapshot(snapshot);
+  }, []);
 
   return (
     <div className="App">
