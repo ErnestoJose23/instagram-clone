@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import Post from "./components/post/Post";
 
 import "./App.css";
 
 function App() {
+  const [posts, setPosts] = useState([
+    {
+      username: "James",
+      caption: "Wallpaper",
+      imageUrl:
+        "https://tecnovortex.com/wp-content/uploads/2019/04/wallpaper-engine.jpg",
+    },
+    {
+      username: "John",
+      caption: "This is a wallpaper ",
+      imageUrl:
+        "https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    },
+  ]);
+  const posts = [];
+  posts.append("");
+
   return (
     <div className="App">
       <div className="header">
