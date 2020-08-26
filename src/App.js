@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import "./App.css";
 import { db } from "./firebase";
+import { Button } from "@material-ui/core";
 
 function getModalStyle() {
   const top = 50;
@@ -20,7 +21,7 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: 400,
+    width: 300,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -63,6 +64,7 @@ function App() {
           alt="Logo"
         ></img>
       </div>
+      <Button onClick={() => setOpen(true)}>Sing Up</Button>
 
       {posts.map(({ id, post }) => (
         <Post
