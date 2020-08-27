@@ -14,3 +14,9 @@
   background-color: #fafafa;
   height: 100vh;
 }
+
+.signup {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}

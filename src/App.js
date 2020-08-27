@@ -4,8 +4,9 @@ import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 
 import "./App.css";
-import { db } from "./firebase";
-import { Button } from "@material-ui/core";
+import { db, auth } from "./firebase";
+import { Button, Input } from "@material-ui/core";
+import { auth } from "firebase";
 
 function getModalStyle() {
   const top = 50;
@@ -36,6 +37,10 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
 
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   useEffect(() => {
     db.collection("posts").onSnapshot((snapshot) => {
       setPosts(
@@ -47,14 +52,46 @@ function App() {
     });
   }, []);
 
+  const signUp = (event) => {
+    event.preventDefault();
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .catch((error) => alert(error.message));
+  };
+
   return (
     <div className="App">
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Text in a modal</h2>
-          <p id="simple-modal-description">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </p>
+          <form className="signup">
+            <center>
+              <img
+                className="headerImage"
+                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                alt="Logo"
+              ></img>
+            </center>
+            <Input
+              placeholder="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              placeholder="email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button onClick={signUp}>Sign Up</Button>
+          </form>
         </div>
       </Modal>
       <div className="header">
@@ -64,7 +101,9 @@ function App() {
           alt="Logo"
         ></img>
       </div>
-      <Button onClick={() => setOpen(true)}>Sing Up</Button>
+      <Button type="submit" onClick={() => setOpen(true)}>
+        Sing Up
+      </Button>
 
       {posts.map(({ id, post }) => (
         <Post
