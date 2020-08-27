@@ -6,7 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import "./App.css";
 import { db, auth } from "./firebase";
 import { Button, Input } from "@material-ui/core";
-import { auth } from "firebase";
 
 function getModalStyle() {
   const top = 50;
@@ -40,6 +39,26 @@ function App() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        console.log(authUser);
+        setUser(authUser);
+
+        if(authUser.displayName){
+
+        }else{
+          return authUser.updateProfile({
+            displayName:username;
+          });
+        }
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     db.collection("posts").onSnapshot((snapshot) => {
