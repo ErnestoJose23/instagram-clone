@@ -99,7 +99,11 @@ function App() {
     <div className="App">
       <Modal open={openStore} onClose={() => setOpenStore(false)}>
         <div style={modalStyle} className={classes.paper}>
-          <ImageUpload username={user.displayName}></ImageUpload>
+          {user?.displayName ? (
+            <ImageUpload username={user.displayName}></ImageUpload>
+          ) : (
+            <h3>Login to upload</h3>
+          )}
         </div>
       </Modal>
       <Modal open={open} onClose={() => setOpen(false)}>
@@ -163,13 +167,10 @@ function App() {
         </div>
       </Modal>
       <div className="header">
-        {user ? (
-          <IconButton onClick={() => setOpenStore(true)}>
-            <CameraAltIcon />
-          </IconButton>
-        ) : (
-          <p></p>
-        )}
+        <IconButton onClick={() => setOpenStore(true)}>
+          <CameraAltIcon />
+        </IconButton>
+
         <img
           className="headerImage"
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
