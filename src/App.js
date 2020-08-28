@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import Post from "./components/post/Post";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
+import CameraAltIcon from "@material-ui/icons/CameraAlt";
+import ImageUpload from "./ImageUpload";
+import IconButton from "@material-ui/core/IconButton";
 
 import "./App.css";
 import { db, auth } from "./firebase";
@@ -36,6 +39,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [openSignIn, setOpenSignIn] = useState(false);
+  const [openStore, setOpenStore] = useState(false);
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -93,6 +97,11 @@ function App() {
 
   return (
     <div className="App">
+      <Modal open={openStore} onClose={() => setOpenStore(false)}>
+        <div style={modalStyle} className={classes.paper}>
+          <ImageUpload></ImageUpload>
+        </div>
+      </Modal>
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
           <form className="signup">
@@ -154,26 +163,33 @@ function App() {
         </div>
       </Modal>
       <div className="header">
+        {user ? (
+          <IconButton onClick={() => setOpenStore(true)}>
+            <CameraAltIcon />
+          </IconButton>
+        ) : (
+          <p></p>
+        )}
         <img
           className="headerImage"
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
           alt="Logo"
         ></img>
+        {user ? (
+          <Button type="submit" onClick={() => auth.signOut()}>
+            Logout
+          </Button>
+        ) : (
+          <div className="login">
+            <Button type="submit" onClick={() => setOpen(true)}>
+              Sing Up
+            </Button>
+            <Button type="submit" onClick={() => setOpenSignIn(true)}>
+              Sing In
+            </Button>
+          </div>
+        )}
       </div>
-      {user ? (
-        <Button type="submit" onClick={() => auth.signOut()}>
-          Logout
-        </Button>
-      ) : (
-        <div className="login">
-          <Button type="submit" onClick={() => setOpen(true)}>
-            Sing Up
-          </Button>
-          <Button type="submit" onClick={() => setOpenSignIn(true)}>
-            Sing In
-          </Button>
-        </div>
-      )}
 
       {posts.map(({ id, post }) => (
         <Post
