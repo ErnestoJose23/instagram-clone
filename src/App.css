@@ -11,6 +11,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  width: 92%;
+  z-index: 2;
+  height: 20px;
 }
 
 .App {
@@ -26,4 +30,8 @@
 
 .headerImage {
   padding-left: 10px;
+}
+
+.posts {
+  padding-top: 80px;
 }
