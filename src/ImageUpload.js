@@ -40,15 +40,20 @@ function ImageUpload(username) {
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               caption: caption,
               imageUrl: url,
-              username: username,
+              username: username.toString(),
             });
           });
+
+        setProgress(0);
+        setCaption("");
+        setImage(null);
       }
     );
   };
 
   return (
     <div>
+      <progress value={progress} max="100"></progress>
       <input
         type="text"
         placeholder="Enter a caption..."
