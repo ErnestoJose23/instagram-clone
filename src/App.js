@@ -99,7 +99,7 @@ function App() {
     <div className="App">
       <Modal open={openStore} onClose={() => setOpenStore(false)}>
         <div style={modalStyle} className={classes.paper}>
-          <ImageUpload></ImageUpload>
+          <ImageUpload username={user.displayName}></ImageUpload>
         </div>
       </Modal>
       <Modal open={open} onClose={() => setOpen(false)}>
