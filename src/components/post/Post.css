@@ -29,3 +29,21 @@
   border: 1px solid lightgray;
   margin-bottom: 45px;
 }
+
+.commentBox {
+  display: flex;
+  margin-top: 10px;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  border-top: 1px solid lightgray;
+}
+
+.button {
+  flex: 0;
+  border: none;
+  border-top: 1px solid lightgray;
+}

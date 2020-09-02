@@ -5,7 +5,8 @@ import { db } from "../../firebase";
 import Avatar from "@material-ui/core/Avatar";
 
 function Post({ postId, username, caption, imageUrl }) {
-  const [comment, setComments] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
     let unsubscribe;
@@ -18,7 +19,9 @@ function Post({ postId, username, caption, imageUrl }) {
           setComments(snapshot.docs.map((doc) => doc.data()));
         });
     }
-  });
+  }, [postId]);
+
+  const postComment = (event) => {};
 
   return (
     <div className="post">
@@ -30,6 +33,23 @@ function Post({ postId, username, caption, imageUrl }) {
       <p className="postText">
         <strong>{username}:</strong> {caption}
       </p>
+      <form className="commentBox">
+        <input
+          className="input"
+          type="text"
+          placeholder="Add a commnet..."
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+        <button
+          className="button"
+          disabled={!comment}
+          type="submit"
+          onClick={postComment}
+        >
+          Post
+        </button>
+      </form>
     </div>
   );
 }
