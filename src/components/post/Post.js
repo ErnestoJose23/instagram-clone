@@ -48,37 +48,34 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
     event.preventDefault();
     var userPost = user.displayName + postId;
 
-    var numbers = db
-      .collectionGroup("postsLikes")
-      .where("userPost", "==", userPost);
+    var numbers = db.collection("postsLikes").where("userPost", "==", userPost);
     numbers.get().then(function (querySnapshot) {
       if (!querySnapshot.empty) {
-        console.log("please");
+        querySnapshot.forEach(function (doc) {
+          console.log(doc.id);
+
+          db.collection("postsLikes")
+            .doc(doc.id)
+            .delete()
+            .then(function () {
+              console.log("Document successfully deleted!");
+            })
+            .catch(function (error) {
+              console.error("Error removing document: ", error);
+            });
+        });
+        const decrement = firebase.firestore.FieldValue.increment(-1);
+        const postLiked = db.collection("posts").doc(postId);
+        postLiked.update({ liked: decrement });
+      } else {
+        db.collection("postsLikes").add({
+          userPost: userPost,
+        });
+        const increment = firebase.firestore.FieldValue.increment(1);
+        const postLiked = db.collection("posts").doc(postId);
+        postLiked.update({ liked: increment });
       }
     });
-
-    firebase
-      .app()
-      .database()
-      .ref("postsLikes")
-      .orderByChild("userPost")
-      .equalTo("HolaXb51BYOyHt7WbbcwfPSi")
-      .once("value", (snapshot) => {
-        if (snapshot.exists()) {
-          const userData = snapshot.val();
-          console.log("Ya le diste like", userData);
-        } else {
-          /*
-          db.collection("postsLikes").add({
-            userPost: userPost,
-          });
-          const increment = firebase.firestore.FieldValue.increment(1);
-          const postLiked = db.collection("posts").doc(postId);
-          postLiked.update({ liked: increment });
-*/
-          console.log(userPost);
-        }
-      });
   };
 
   return (
