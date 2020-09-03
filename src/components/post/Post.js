@@ -46,39 +46,38 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
 
   const likeImage = (event) => {
     event.preventDefault();
+    var userPost = user.displayName + postId;
 
-    var docRef = db
-      .collection("posts")
-      .doc(postId)
-      .collection("likes")
-      .doc(user.displayName);
+    var numbers = db
+      .collectionGroup("postsLikes")
+      .where("userPost", "==", userPost);
+    numbers.get().then(function (querySnapshot) {
+      if (!querySnapshot.empty) {
+        console.log("please");
+      }
+    });
 
-    docRef
-      .get()
-      .then(function (doc) {
-        if (doc.exists) {
-          console.log("Ya le diste like");
+    firebase
+      .app()
+      .database()
+      .ref("postsLikes")
+      .orderByChild("userPost")
+      .equalTo("HolaXb51BYOyHt7WbbcwfPSi")
+      .once("value", (snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          console.log("Ya le diste like", userData);
         } else {
-          db.collection("posts").doc(postId).collection("likes").add({
-            username: user.displayName,
+          /*
+          db.collection("postsLikes").add({
+            userPost: userPost,
           });
-          firebase
-            .database()
-            .ref(`/posts/${postId}/likes`)
-            .child(user.displayName)
-            .set({
-              username: user.displayName,
-            });
-
           const increment = firebase.firestore.FieldValue.increment(1);
           const postLiked = db.collection("posts").doc(postId);
           postLiked.update({ liked: increment });
-
-          console.log(postLiked);
+*/
+          console.log(userPost);
         }
-      })
-      .catch(function (error) {
-        console.log("Error getting document:", error);
       });
   };
 
