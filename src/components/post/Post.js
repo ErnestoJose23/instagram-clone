@@ -9,7 +9,7 @@ import SendIcon from "@material-ui/icons/Send";
 
 import Avatar from "@material-ui/core/Avatar";
 
-function Post({ postId, user, username, caption, imageUrl, likes }) {
+function Post({ postId, user, username, caption, imageUrl, liked }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
@@ -23,7 +23,12 @@ function Post({ postId, user, username, caption, imageUrl, likes }) {
         .orderBy("timestamp", "desc")
         .limit(3)
         .onSnapshot((snapshot) => {
-          setComments(snapshot.docs.map((doc) => doc.data()));
+          setComments(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              comment: doc.data(),
+            }))
+          );
         });
     }
   }, [postId]);
@@ -41,6 +46,40 @@ function Post({ postId, user, username, caption, imageUrl, likes }) {
 
   const likeImage = (event) => {
     event.preventDefault();
+
+    var docRef = db
+      .collection("posts")
+      .doc(postId)
+      .collection("likes")
+      .doc(user.displayName);
+
+    docRef
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          console.log("Ya le diste like");
+        } else {
+          db.collection("posts").doc(postId).collection("likes").add({
+            username: user.displayName,
+          });
+          firebase
+            .database()
+            .ref(`/posts/${postId}/likes`)
+            .child(user.displayName)
+            .set({
+              username: user.displayName,
+            });
+
+          const increment = firebase.firestore.FieldValue.increment(1);
+          const postLiked = db.collection("posts").doc(postId);
+          postLiked.update({ liked: increment });
+
+          console.log(postLiked);
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
   };
 
   return (
@@ -50,7 +89,7 @@ function Post({ postId, user, username, caption, imageUrl, likes }) {
         <h4>{username}</h4>
       </div>
       <img className="postImage" src={imageUrl} />
-      <IconButton onClick={() => likeImage()}>
+      <IconButton onClick={likeImage}>
         <FavoriteBorderIcon />
       </IconButton>
 
@@ -62,7 +101,7 @@ function Post({ postId, user, username, caption, imageUrl, likes }) {
       </IconButton>
 
       <p className="postText">
-        <strong>{likes} Likes</strong>
+        <strong>{liked} Likes</strong>
       </p>
 
       <p className="postText">
@@ -70,8 +109,8 @@ function Post({ postId, user, username, caption, imageUrl, likes }) {
       </p>
 
       <div className="comments">
-        {comments.map((comment) => (
-          <p>
+        {comments.map(({ id, comment }) => (
+          <p key={id}>
             <strong>{comment.username}</strong> {comment.text}
           </p>
         ))}
