@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./Post.css";
 import { db } from "../../firebase";
 import firebase from "firebase";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import IconButton from "@material-ui/core/IconButton";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
+import SendIcon from "@material-ui/icons/Send";
 
 import Avatar from "@material-ui/core/Avatar";
 
-function Post({ postId, user, username, caption, imageUrl }) {
+function Post({ postId, user, username, caption, imageUrl, likes }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
@@ -17,6 +21,7 @@ function Post({ postId, user, username, caption, imageUrl }) {
         .doc(postId)
         .collection("comments")
         .orderBy("timestamp", "desc")
+        .limit(3)
         .onSnapshot((snapshot) => {
           setComments(snapshot.docs.map((doc) => doc.data()));
         });
@@ -34,6 +39,10 @@ function Post({ postId, user, username, caption, imageUrl }) {
     setComment("");
   };
 
+  const likeImage = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div className="post">
       <div className="postHeader">
@@ -41,6 +50,21 @@ function Post({ postId, user, username, caption, imageUrl }) {
         <h4>{username}</h4>
       </div>
       <img className="postImage" src={imageUrl} />
+      <IconButton onClick={() => likeImage()}>
+        <FavoriteBorderIcon />
+      </IconButton>
+
+      <IconButton>
+        <ChatBubbleOutlineIcon />
+      </IconButton>
+      <IconButton>
+        <SendIcon />
+      </IconButton>
+
+      <p className="postText">
+        <strong>{likes} Likes</strong>
+      </p>
+
       <p className="postText">
         <strong>{username}:</strong> {caption}
       </p>
