@@ -13,6 +13,8 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
+  const [colorIcon, setColorIcon] = useState("");
+
   useEffect(() => {
     let unsubscribe;
     if (postId) {
@@ -67,6 +69,8 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
         const decrement = firebase.firestore.FieldValue.increment(-1);
         const postLiked = db.collection("posts").doc(postId);
         postLiked.update({ liked: decrement });
+
+        setColorIcon("");
       } else {
         db.collection("postsLikes").add({
           userPost: userPost,
@@ -74,6 +78,7 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
         const increment = firebase.firestore.FieldValue.increment(1);
         const postLiked = db.collection("posts").doc(postId);
         postLiked.update({ liked: increment });
+        setColorIcon("secondary");
       }
     });
   };
@@ -86,7 +91,7 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
       </div>
       <img className="postImage" src={imageUrl} />
       <IconButton onClick={likeImage}>
-        <FavoriteBorderIcon />
+        <FavoriteBorderIcon color={colorIcon} />
       </IconButton>
 
       <IconButton>
