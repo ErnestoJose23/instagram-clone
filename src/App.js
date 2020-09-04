@@ -188,11 +188,11 @@ function App() {
         {user ? <Footer user={user} setOpenStore={setOpenStore} /> : <p></p>}
 
         <Switch>
-          <Route path="/">
-            <Posts backButton="/" user={user} />
-          </Route>
           <Route path="/comments">
             <Comment backButton="/" />
+          </Route>
+          <Route path="/">
+            <Posts backButton="/" user={user} />
           </Route>
         </Switch>
       </Router>

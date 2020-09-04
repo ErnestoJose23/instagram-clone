@@ -101,15 +101,22 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
       <IconButton onClick={likeImage}>
         <Favorite color={colorIcon} />
       </IconButton>
-
-      <IconButton>
-        <ChatBubbleOutlineIcon />
-      </IconButton>
-      <Link to="/comments">
+      <Link
+        to={{
+          pathname: "/comments",
+          idProp: {
+            id: postId,
+          },
+        }}
+      >
         <IconButton>
-          <SendIcon />
+          <ChatBubbleOutlineIcon />
         </IconButton>
       </Link>
+
+      <IconButton>
+        <SendIcon />
+      </IconButton>
 
       <p className="postText">
         <strong>{liked} Likes</strong>
