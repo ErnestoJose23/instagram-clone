@@ -105,7 +105,7 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
       <IconButton>
         <ChatBubbleOutlineIcon />
       </IconButton>
-      <Link to="/comment">
+      <Link to="/comments">
         <IconButton>
           <SendIcon />
         </IconButton>

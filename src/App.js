@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Comment from "./components/CommentPage/Comment";
+import Posts from "./Posts";
 import Footer from "./Footer";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
@@ -40,7 +41,6 @@ function App() {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
-  const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openStore, setOpenStore] = useState(false);
@@ -64,19 +64,6 @@ function App() {
       unsubscribe();
     };
   }, [user, username]);
-
-  useEffect(() => {
-    db.collection("posts")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setPosts(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            post: doc.data(),
-          }))
-        );
-      });
-  }, []);
 
   const signUp = (event) => {
     event.preventDefault();
@@ -201,6 +188,9 @@ function App() {
         {user ? <Footer user={user} setOpenStore={setOpenStore} /> : <p></p>}
 
         <Switch>
+          <Route path="/">
+            <Posts backButton="/" user={user} />
+          </Route>
           <Route path="/comments">
             <Comment backButton="/" />
           </Route>
