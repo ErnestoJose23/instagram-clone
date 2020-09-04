@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Post from "./components/post/Post";
+
+import Comment from "./components/CommentPage/Comment";
 import Footer from "./Footer";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
@@ -10,6 +11,8 @@ import IconButton from "@material-ui/core/IconButton";
 import "./App.css";
 import { db, auth } from "./firebase";
 import { Button, Input } from "@material-ui/core";
+
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 function getModalStyle() {
   const top = 50;
@@ -194,20 +197,15 @@ function App() {
           </div>
         )}
       </div>
-      <div className="posts">
-        {posts.map(({ id, post }) => (
-          <Post
-            key={id}
-            postId={id}
-            user={user}
-            username={post.username}
-            caption={post.caption}
-            imageUrl={post.imageUrl}
-            liked={post.liked}
-          />
-        ))}
-      </div>
-      <Footer user={user} setOpenScore={setOpenStore} />
+      <Router>
+        {user ? <Footer user={user} setOpenStore={setOpenStore} /> : <p></p>}
+
+        <Switch>
+          <Route path="/comments">
+            <Comment backButton="/" />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

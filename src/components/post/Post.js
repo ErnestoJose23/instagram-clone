@@ -6,6 +6,7 @@ import Favorite from "@material-ui/icons/FavoriteBorder";
 import IconButton from "@material-ui/core/IconButton";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import SendIcon from "@material-ui/icons/Send";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import Avatar from "@material-ui/core/Avatar";
 
@@ -104,9 +105,11 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
       <IconButton>
         <ChatBubbleOutlineIcon />
       </IconButton>
-      <IconButton>
-        <SendIcon />
-      </IconButton>
+      <Link to="/comment">
+        <IconButton>
+          <SendIcon />
+        </IconButton>
+      </Link>
 
       <p className="postText">
         <strong>{liked} Likes</strong>

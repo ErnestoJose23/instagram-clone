@@ -6,13 +6,17 @@ import SearchIcon from "@material-ui/icons/Search";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Avatar from "@material-ui/core/Avatar";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 function Footer({ user, setOpenStore }) {
   return (
     <div className="footer">
-      <IconButton>
-        <HomeIcon />
-      </IconButton>
+      <Link to="/">
+        <IconButton>
+          <HomeIcon />
+        </IconButton>
+      </Link>
+
       <IconButton>
         <SearchIcon />
       </IconButton>
