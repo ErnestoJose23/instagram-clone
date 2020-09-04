@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Post.css";
 import { db } from "../../firebase";
 import firebase from "firebase";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import Favorite from "@material-ui/icons/FavoriteBorder";
 import IconButton from "@material-ui/core/IconButton";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import SendIcon from "@material-ui/icons/Send";
@@ -12,7 +12,6 @@ import Avatar from "@material-ui/core/Avatar";
 function Post({ postId, user, username, caption, imageUrl, liked }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-
   const [colorIcon, setColorIcon] = useState("");
 
   useEffect(() => {
@@ -33,6 +32,14 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
           );
         });
     }
+
+    var userPost = user.displayName + postId;
+    var numbers = db.collection("postsLikes").where("userPost", "==", userPost);
+    numbers.get().then(function (querySnapshot) {
+      if (!querySnapshot.empty) {
+        setColorIcon("secondary");
+      }
+    });
   }, [postId]);
 
   const postComment = (event) => {
@@ -91,7 +98,7 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
       </div>
       <img className="postImage" src={imageUrl} />
       <IconButton onClick={likeImage}>
-        <FavoriteBorderIcon color={colorIcon} />
+        <Favorite color={colorIcon} />
       </IconButton>
 
       <IconButton>

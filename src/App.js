@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Post from "./components/post/Post";
+import Footer from "./Footer";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
@@ -206,6 +207,7 @@ function App() {
           />
         ))}
       </div>
+      <Footer user={user} setOpenScore={setOpenStore} />
     </div>
   );
 }
