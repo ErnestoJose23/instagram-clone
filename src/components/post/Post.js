@@ -103,8 +103,8 @@ function Post({ postId, user, username, caption, imageUrl, liked }) {
       </IconButton>
       <Link
         to={{
-          pathname: "/comments",
-          idProp: {
+          pathname: "/comments/:postId",
+          state: {
             id: postId,
           },
         }}

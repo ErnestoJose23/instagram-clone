@@ -188,7 +188,7 @@ function App() {
         {user ? <Footer user={user} setOpenStore={setOpenStore} /> : <p></p>}
 
         <Switch>
-          <Route path="/comments">
+          <Route path="/comments/:postId">
             <Comment backButton="/" />
           </Route>
           <Route path="/">
